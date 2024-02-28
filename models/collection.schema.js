@@ -15,4 +15,4 @@ name: {
     timestamps:true
 }
 );
-export default mongoose.model("collection",collectionSchema)
+export default mongoose.model("Collection",collectionSchema)

@@ -23,4 +23,4 @@ default:true
     }
 )
 
-export default mongoose.model("coupon",couponSchema)
+export default mongoose.model("Coupon",couponSchema)

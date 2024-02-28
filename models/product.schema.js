@@ -39,8 +39,8 @@ sold:{
 },
 //reference of a collection
 collectionId:{
-    type: mongoose.Schema.Types.objectId,
-    ref:"collection"
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"Collection"
 }
 
 },
@@ -49,4 +49,4 @@ collectionId:{
 }
 )
 
-export default mongoose.model("product",productSchema)
+export default mongoose.model("Product",productSchema)
