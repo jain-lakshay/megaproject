@@ -48,3 +48,56 @@ res.status(200).json({
 
 })
  })
+
+/******************************************************
+ * @LOGIN
+ * @route http://localhost:5000/api/auth/login
+ * @description User signIn Controller for loging new user
+ * @parameters  email, password
+ * @returns User Object
+ ******************************************************/
+export const login =asyncHandler(async(req,res)=>{
+const{email,password}=req.body
+
+if(!email||!password){
+   throw  new CustomError('please fill the required field',400)
+}
+//find user
+const user = User.findOne({email}).select("+password")//read documentation moongoose select
+if(!user){
+   throw new CustomError('Invalid Credantial',400)
+}
+//comparing the password
+const isPasswordMatched= await user.comparePassword(password)
+if(isPasswordMatched){
+const token =user.getJwtToken()
+user.password=undefined
+res.cookie("token",token,cookieOptions)
+return res.status(200).json({
+   success:true,
+   token,
+   user,
+
+})
+}
+throw new CustomError('Invalid Credential')
+})
+
+/******************************************************
+ * @LOGOUT
+ * @route http://localhost:5000/api/auth/logout
+ * @description User logout bby clearing user cookies
+ * @parameters  
+ * @returns success message
+ ******************************************************/
+
+ export const logout = asyncHandler(async(req,res)=>{
+   res.cookie('token',null,{
+      expires: new Date(Date.now()),
+      httpOnly:true
+   })
+   res.status(200).json({
+      success:true,
+      message:"loggedout"
+   })
+ })
