@@ -1,5 +1,5 @@
 import  transporter from '../config/transporter.config'
-import config from '../config'
+import config from '../config/index'
 
 
 
